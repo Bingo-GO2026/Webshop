@@ -773,6 +773,223 @@
     .av-mobile-content { display: flex; }
     .av-modal iframe { display: none !important; }
   }
+  /* ── WINKELWAGEN MODAL ── */
+  .cart-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 9998;
+    background: rgba(15,23,42,0.75); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .cart-modal-overlay.open { display: flex; }
+  .cart-modal {
+    background: white; border-radius: 24px; width: 100%; max-width: 560px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35); overflow: hidden;
+    animation: cartSlideUp 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes cartSlideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .cart-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 28px; border-bottom: 2px solid var(--light-gray);
+  }
+  .cart-header h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem;
+    letter-spacing: 0.06em; color: var(--dark); margin: 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cart-header h3 svg { stroke: var(--bingo-blue); }
+  .cart-close {
+    width: 36px; height: 36px; border-radius: 50%; border: none;
+    background: var(--light-gray); cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--dark); transition: background 0.2s;
+  }
+  .cart-close:hover { background: #d1d9f0; }
+  .cart-body { padding: 28px; }
+  /* Product row */
+  .cart-product {
+    display: flex; align-items: center; gap: 18px;
+    background: var(--off-white); border-radius: 16px;
+    padding: 18px; margin-bottom: 24px;
+    border: 2px solid var(--light-gray);
+  }
+  .cart-product-icon {
+    width: 60px; height: 60px; border-radius: 14px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--bingo-blue), var(--bingo-blue-light));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cart-product-icon svg { stroke: white; }
+  .cart-product-info { flex: 1; }
+  .cart-product-name {
+    font-weight: 800; font-size: 1rem; color: var(--dark); margin-bottom: 3px;
+  }
+  .cart-product-city {
+    font-size: 0.82rem; color: var(--bingo-blue); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .cart-product-price {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+    color: var(--dark); letter-spacing: 0.04em; flex-shrink: 0;
+  }
+  /* Email field */
+  .cart-field { margin-bottom: 20px; }
+  .cart-field label {
+    display: block; font-weight: 800; font-size: 0.82rem;
+    color: var(--dark); margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .cart-field input {
+    width: 100%; padding: 14px 18px; border: 2px solid var(--light-gray);
+    border-radius: 12px; font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem; font-weight: 600; color: var(--dark);
+    background: var(--off-white); transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none; -webkit-appearance: none; appearance: none;
+  }
+  .cart-field input:focus {
+    border-color: var(--bingo-blue);
+    box-shadow: 0 0 0 4px rgba(26,91,191,0.1);
+    background: white;
+  }
+  .cart-field input.error { border-color: var(--bingo-red); }
+  /* Checkbox consent */
+  .cart-consent {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: #fff8e1; border: 2px solid #f59e0b;
+    border-radius: 14px; padding: 16px 18px; margin-bottom: 24px;
+    cursor: pointer;
+  }
+  .cart-consent input[type="checkbox"] {
+    width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;
+    accent-color: var(--bingo-blue); cursor: pointer;
+  }
+  .cart-consent-text {
+    font-size: 0.88rem; color: #78350f; font-weight: 700; line-height: 1.6;
+    cursor: pointer; user-select: none;
+  }
+  .cart-consent.error-consent { border-color: var(--bingo-red); background: #fff0f0; }
+  .cart-consent.error-consent .cart-consent-text { color: var(--bingo-red); }
+  /* Divider & totaal */
+  .cart-divider {
+    height: 1px; background: var(--light-gray); margin: 0 0 20px;
+  }
+  .cart-total {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .cart-total-label { font-weight: 800; font-size: 1rem; color: var(--dark); }
+  .cart-total-price {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+    background: linear-gradient(135deg, var(--bingo-blue), var(--bingo-red));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.04em;
+  }
+  /* Order button */
+  .cart-order-btn {
+    width: 100%; padding: 17px; border: none; border-radius: 14px;
+    background: linear-gradient(135deg, var(--bingo-red), var(--bingo-red-light));
+    color: white; font-family: 'Nunito', sans-serif; font-size: 1.05rem;
+    font-weight: 800; cursor: pointer; letter-spacing: 0.03em;
+    box-shadow: 0 8px 28px rgba(212,43,43,0.38); transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .cart-order-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(212,43,43,0.48); }
+  .cart-order-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  /* Success state */
+  .cart-success {
+    display: none; text-align: center; padding: 20px 0 8px;
+  }
+  .cart-success-icon {
+    width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 18px;
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(34,197,94,0.35);
+  }
+  .cart-success-icon svg { stroke: white; }
+  .cart-success h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem;
+    letter-spacing: 0.06em; color: var(--dark); margin-bottom: 10px;
+  }
+  .cart-success p { color: var(--gray); font-weight: 600; font-size: 0.97rem; line-height: 1.7; }
+  /* Secure badges */
+  .cart-badges {
+    display: flex; gap: 16px; justify-content: center;
+    margin-top: 16px; flex-wrap: wrap;
+  }
+  .cart-badge {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+  }
+  .cart-badge svg { stroke: var(--gray); flex-shrink: 0; }
+  @media (max-width: 600px) {
+    .cart-modal-overlay { padding: 0; align-items: flex-end; }
+    .cart-modal { border-radius: 24px 24px 0 0; max-width: 100%; }
+    .cart-body { padding: 20px 18px; }
+    .cart-header { padding: 18px 18px; }
+  }
+  /* ── HERROEPINGSRECHT MODAL ── */
+  .hr-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(15,23,42,0.75); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .hr-modal-overlay.open { display: flex; }
+  .hr-modal {
+    background: white; border-radius: 20px; width: 100%; max-width: 860px;
+    height: 90vh; display: flex; flex-direction: column;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35); overflow: hidden;
+  }
+  .hr-modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 28px; border-bottom: 2px solid var(--light-gray); flex-shrink: 0;
+  }
+  .hr-modal-header h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+    letter-spacing: 0.06em; color: var(--dark); margin: 0;
+  }
+  .hr-modal-close {
+    width: 36px; height: 36px; border-radius: 50%; border: none;
+    background: var(--light-gray); cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--dark); transition: background 0.2s;
+  }
+  .hr-modal-close:hover { background: #d1d9f0; }
+  .hr-modal iframe { flex: 1; border: none; width: 100%; }
+  .hr-mobile-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 36px 28px;
+    flex: 1;
+    text-align: center;
+  }
+  .hr-mobile-icon { font-size: 3rem; line-height: 1; }
+  .hr-mobile-hint {
+    color: var(--gray); font-weight: 600; line-height: 1.7;
+    max-width: 300px; font-size: 0.95rem;
+  }
+  .hr-mobile-btn {
+    display: block; width: 100%; padding: 16px 20px;
+    background: linear-gradient(135deg, var(--bingo-blue), var(--bingo-blue-light));
+    color: white; border-radius: 14px; text-decoration: none;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+    box-shadow: 0 6px 20px rgba(26,91,191,0.3); transition: all 0.2s;
+    text-align: center;
+  }
+  .hr-mobile-btn:hover { transform: translateY(-2px); }
+  @media (max-width: 768px) {
+    .hr-modal-overlay { padding: 0; align-items: flex-end; }
+    .hr-modal {
+      border-radius: 20px 20px 0 0;
+      height: 75vh;
+      max-width: 100%;
+      width: 100%;
+    }
+    .hr-mobile-content { display: flex; }
+    .hr-modal iframe { display: none !important; }
+  }
   /* ── FAQ ── */
   #faq { background: var(--off-white); padding-top: 70px; }
   .faq-hero {
@@ -974,6 +1191,7 @@
       <a onclick="showPage('faq')" data-i18n="nav.faq">FAQ</a>
       <a onclick="showPage('contact')" data-i18n="nav.contact">Contact</a>
       <a onclick="openAVModal()" style="cursor:pointer" data-i18n="footer.av">Algemene Voorwaarden</a>
+      <a onclick="openHRModal()" style="cursor:pointer" data-i18n="footer.hr">Herroepingsrecht en digitale levering</a>
     </div>
     <div class="footer-bottom">
       © 2026 Bingo-Go &nbsp;|&nbsp; Stichting Jonge Honden &nbsp;|&nbsp; Kleiwerd 42, 9746 CV Groningen<br>
@@ -1039,6 +1257,7 @@
       <a onclick="showPage('faq')" data-i18n="nav.faq">FAQ</a>
       <a onclick="showPage('contact')" data-i18n="nav.contact">Contact</a>
       <a onclick="openAVModal()" style="cursor:pointer" data-i18n="footer.av">Algemene Voorwaarden</a>
+      <a onclick="openHRModal()" style="cursor:pointer" data-i18n="footer.hr">Herroepingsrecht en digitale levering</a>
     </div>
     <div class="footer-bottom">
       © 2026 Bingo-Go &nbsp;|&nbsp; Stichting Jonge Honden &nbsp;|&nbsp; Kleiwerd 42, 9746 CV Groningen<br>
@@ -1132,6 +1351,7 @@
       <a onclick="showPage('faq')" data-i18n="nav.faq">FAQ</a>
       <a onclick="showPage('contact')" data-i18n="nav.contact">Contact</a>
       <a onclick="openAVModal()" style="cursor:pointer" data-i18n="footer.av">Algemene Voorwaarden</a>
+      <a onclick="openHRModal()" style="cursor:pointer" data-i18n="footer.hr">Herroepingsrecht en digitale levering</a>
     </div>
     <div class="footer-bottom">
       © 2026 Bingo-Go &nbsp;|&nbsp; Stichting Jonge Honden &nbsp;|&nbsp; Kleiwerd 42, 9746 CV Groningen<br>
@@ -1161,15 +1381,15 @@
     <div class="city-cards">
       <div class="city-card">
         <div class="city-card-header available" style="flex-direction:column;gap:4px;"><span class="city-header-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span><span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.08em;color:white;margin-top:2px;">Delft</span><span class="city-badge live" data-i18n="badge.live">Live</span></div>
-        <div class="city-card-body"><h3>€19,95</h3><p data-i18n="city.delft">Ontdek de historische stad: van de grachten tot de Markt en de Oude Kerk.</p><button class="btn-card active" onclick="showPage('contact')" data-i18n="btn.order">Bestel Nu</button></div>
+        <div class="city-card-body"><h3>€19,95</h3><p data-i18n="city.delft">Ontdek de historische stad: van de grachten tot de Markt en de Oude Kerk.</p><button class="btn-card active" onclick="openCart('Delft')" data-i18n="btn.order">Bestel Nu</button></div>
       </div>
       <div class="city-card">
         <div class="city-card-header available" style="flex-direction:column;gap:4px;"><span class="city-header-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2 16 C2 10 6 6 12 6 C18 6 22 10 22 16"/><line x1="2" y1="16" x2="2" y2="22"/><line x1="22" y1="16" x2="22" y2="22"/><line x1="12" y1="6" x2="12" y2="22"/><line x1="7" y1="11" x2="7" y2="22"/><line x1="17" y1="11" x2="17" y2="22"/></svg></span><span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.08em;color:white;margin-top:2px;">Rotterdam</span><span class="city-badge live" data-i18n="badge.live">Live</span></div>
-        <div class="city-card-body"><h3>€19,95</h3><p data-i18n="city.rotterdam">De havenstad in een nieuw jasje. Van de Erasmusbrug tot Markthal en de Witte de Withstraat.</p><button class="btn-card active" onclick="showPage('contact')" data-i18n="btn.order">Bestel Nu</button></div>
+        <div class="city-card-body"><h3>€19,95</h3><p data-i18n="city.rotterdam">De havenstad in een nieuw jasje. Van de Erasmusbrug tot Markthal en de Witte de Withstraat.</p><button class="btn-card active" onclick="openCart('Rotterdam')" data-i18n="btn.order">Bestel Nu</button></div>
       </div>
       <div class="city-card">
         <div class="city-card-header available" style="flex-direction:column;gap:4px;"><span class="city-header-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg></span><span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.08em;color:white;margin-top:2px;">Amsterdam</span><span class="city-badge live" data-i18n="badge.live">Live</span></div>
-        <div class="city-card-body"><h3>€19,95</h3><p data-i18n="city.amsterdam">De grachtenstad als speelterrein. Van de Jordaan tot het Vondelpark en het Centraal Station.</p><button class="btn-card active" onclick="showPage('contact')" data-i18n="btn.order">Bestel Nu</button></div>
+        <div class="city-card-body"><h3>€19,95</h3><p data-i18n="city.amsterdam">De grachtenstad als speelterrein. Van de Jordaan tot het Vondelpark en het Centraal Station.</p><button class="btn-card active" onclick="openCart('Amsterdam')" data-i18n="btn.order">Bestel Nu</button></div>
       </div>
       <div class="city-card">
         <div class="city-card-header soon" style="flex-direction:column;gap:4px;"><span class="city-header-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.08em;color:white;margin-top:2px;">Utrecht</span><span class="city-badge soon-badge" data-i18n="badge.soon">Binnenkort</span></div>
@@ -1279,6 +1499,7 @@
       <a onclick="showPage('faq')" data-i18n="nav.faq">FAQ</a>
       <a onclick="showPage('contact')" data-i18n="nav.contact">Contact</a>
       <a onclick="openAVModal()" style="cursor:pointer" data-i18n="footer.av">Algemene Voorwaarden</a>
+      <a onclick="openHRModal()" style="cursor:pointer" data-i18n="footer.hr">Herroepingsrecht en digitale levering</a>
     </div>
     <div class="footer-bottom">
       © 2026 Bingo-Go &nbsp;|&nbsp; Stichting Jonge Honden &nbsp;|&nbsp; Kleiwerd 42, 9746 CV Groningen<br>
@@ -1619,6 +1840,7 @@
       <a onclick="showPage('faq')" data-i18n="nav.faq">FAQ</a>
       <a onclick="showPage('contact')" data-i18n="nav.contact">Contact</a>
       <a onclick="openAVModal()" style="cursor:pointer" data-i18n="footer.av">Algemene Voorwaarden</a>
+      <a onclick="openHRModal()" style="cursor:pointer" data-i18n="footer.hr">Herroepingsrecht en digitale levering</a>
     </div>
     <div class="footer-bottom">
       &copy; 2026 Bingo-Go &nbsp;|&nbsp; Stichting Jonge Honden &nbsp;|&nbsp; Kleiwerd 42, 9746 CV Groningen<br>
@@ -1696,6 +1918,7 @@
       <a onclick="showPage('faq')" data-i18n="nav.faq">FAQ</a>
       <a onclick="showPage('contact')" data-i18n="nav.contact">Contact</a>
       <a onclick="openAVModal()" style="cursor:pointer" data-i18n="footer.av">Algemene Voorwaarden</a>
+      <a onclick="openHRModal()" style="cursor:pointer" data-i18n="footer.hr">Herroepingsrecht en digitale levering</a>
     </div>
     <div class="footer-bottom">
       © 2026 Bingo-Go &nbsp;|&nbsp; Stichting Jonge Honden &nbsp;|&nbsp; Kleiwerd 42, 9746 CV Groningen<br>
@@ -1869,7 +2092,22 @@ const translations = {
     'form.success.title': 'Bericht Verstuurd!',
     'form.success.body': 'Bedankt voor je bericht. We reageren zo snel mogelijk, binnen 24 uur.',
     'footer.av': 'Algemene Voorwaarden',
-    'cell.the_hotdog': 'DE HOTDOG',
+    'footer.hr': 'Herroepingsrecht en digitale levering',
+    'cart.title': 'Winkelwagen',
+    'cart.product.name': 'Bingo-Go Bingokaart',
+    'cart.email.label': 'E-mailadres',
+    'cart.consent': 'Ik ga ermee akkoord dat Bingo-Go direct na aankoop digitaal wordt geleverd via een link per e-mail. Ik begrijp en accepteer dat ik hierdoor mijn herroepingsrecht verlies zodra de digitale levering start.',
+    'cart.total': 'Totaal (incl. BTW)',
+    'cart.order.btn': 'Bestelling plaatsen →',
+    'cart.badge1': 'Veilige betaling',
+    'cart.badge2': 'Direct geleverd per e-mail',
+    'cart.badge3': '72 uur geldig',
+    'cart.success.title': 'Bestelling ontvangen!',
+    'cart.success.body': 'Bedankt voor je bestelling. We sturen de speellink zo snel mogelijk naar je e-mailadres.',
+    'cart.email.placeholder': 'jouw@email.nl',
+    'cart.validation.email': 'Vul een geldig e-mailadres in.',
+    'cart.validation.consent': 'Je moet akkoord gaan met de digitale levering om verder te gaan.',
+    'cart.sending': 'Bestelling verwerken...',
     'cell.nature': 'DE NATUUR',
     'cell.the_guide': 'DE GIDS',
     'cell.the_good_samaritan': 'DE GOEDE SAMARITAAN',
@@ -2125,7 +2363,22 @@ const translations = {
     'form.success.body': 'Thanks for your message. We\'ll respond as soon as possible, within 24 hours.',
     'footer.av': 'Algemene Voorwaarden',
     'footer.av': 'General Terms & Conditions',
-    'cell.the_hotdog': 'THE HOTDOG',
+    'footer.hr': 'Right of Withdrawal and Digital Delivery',
+    'cart.title': 'Shopping Cart',
+    'cart.product.name': 'Bingo-Go Bingo Card',
+    'cart.email.label': 'Email address',
+    'cart.consent': 'I agree that Bingo-Go will be delivered digitally immediately after purchase via a link sent to my email. I understand and accept that I thereby waive my right of withdrawal once the digital delivery has started.',
+    'cart.total': 'Total (incl. VAT)',
+    'cart.order.btn': 'Place order →',
+    'cart.badge1': 'Secure payment',
+    'cart.badge2': 'Delivered directly by email',
+    'cart.badge3': 'Valid for 72 hours',
+    'cart.success.title': 'Order received!',
+    'cart.success.body': 'Thank you for your order. We will send the game link to your email address as soon as possible.',
+    'cart.email.placeholder': 'your@email.com',
+    'cart.validation.email': 'Please enter a valid email address.',
+    'cart.validation.consent': 'You must agree to the digital delivery to continue.',
+    'cart.sending': 'Processing order...',
     'cell.nature': 'NATURE',
     'cell.the_guide': 'THE GUIDE',
     'cell.the_good_samaritan': 'THE GOOD SAMARITAN',
@@ -2285,6 +2538,34 @@ function setLang(lang) {
       mobileBtnNL.style.display = 'block';
       mobileBtnEN.style.display = 'none';
       if (mobileHint) mobileHint.textContent = 'Open de voorwaarden in een nieuw tabblad om ze te lezen op jouw telefoon.';
+    }
+  }
+  // Switch HR modal language
+  const hrTitleEl = document.getElementById('hrModalTitle');
+  const hrPDFFrame = document.getElementById('hrPDFFrame');
+  const hrENFrame  = document.getElementById('hrENFrame');
+  if (hrTitleEl) hrTitleEl.textContent = lang === 'en' ? 'RIGHT OF WITHDRAWAL AND DIGITAL DELIVERY' : 'HERROEPINGSRECHT EN DIGITALE LEVERING';
+  if (hrPDFFrame && hrENFrame) {
+    if (lang === 'en') {
+      hrPDFFrame.style.display = 'none';
+      hrENFrame.style.display  = 'block';
+    } else {
+      hrPDFFrame.style.display = 'block';
+      hrENFrame.style.display  = 'none';
+    }
+  }
+  const hrMobileBtnNL = document.getElementById('hrMobileBtnNL');
+  const hrMobileBtnEN = document.getElementById('hrMobileBtnEN');
+  const hrMobileHint  = document.getElementById('hrMobileHint');
+  if (hrMobileBtnNL && hrMobileBtnEN) {
+    if (lang === 'en') {
+      hrMobileBtnNL.style.display = 'none';
+      hrMobileBtnEN.style.display = 'block';
+      if (hrMobileHint) hrMobileHint.textContent = 'Open the document in a new tab to read it on your phone.';
+    } else {
+      hrMobileBtnNL.style.display = 'block';
+      hrMobileBtnEN.style.display = 'none';
+      if (hrMobileHint) hrMobileHint.textContent = 'Open het document in een nieuw tabblad om het te lezen op jouw telefoon.';
     }
   }
 }
@@ -2634,6 +2915,106 @@ function toggleFaq(btn) {
   }
 }
 </script>
+<!-- ── WINKELWAGEN MODAL ── -->
+<div class="cart-modal-overlay" id="cartModal" onclick="closeCartOverlay(event)">
+  <div class="cart-modal">
+    <div class="cart-header">
+      <h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="cartTitle">Winkelwagen</span>
+      </h3>
+      <button class="cart-close" onclick="closeCart()" aria-label="Sluiten">✕</button>
+    </div>
+    <div class="cart-body">
+      <!-- Product -->
+      <div class="cart-product">
+        <div class="cart-product-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <div class="cart-product-info">
+          <div class="cart-product-name" id="cartProductName">Bingo-Go Bingokaart</div>
+          <div class="cart-product-city" id="cartProductCity">Delft</div>
+        </div>
+        <div class="cart-product-price">€19,95</div>
+      </div>
+
+      <!-- Winkelwagen formulier -->
+      <div id="cartFormWrap">
+        <!-- E-mail -->
+        <div class="cart-field">
+          <label id="cartEmailLabel">E-mailadres <span style="color:var(--bingo-red)">*</span></label>
+          <input type="email" id="cartEmail" placeholder="jouw@email.nl" autocomplete="email">
+        </div>
+
+        <!-- Consent checkbox -->
+        <div class="cart-consent" id="cartConsent" onclick="toggleConsent()">
+          <input type="checkbox" id="cartConsentCheck" onclick="event.stopPropagation(); syncConsent()">
+          <span class="cart-consent-text" id="cartConsentText">
+            Ik ga ermee akkoord dat Bingo-Go direct na aankoop digitaal wordt geleverd via een link per e-mail. Ik begrijp en accepteer dat ik hierdoor mijn herroepingsrecht verlies zodra de digitale levering start.
+          </span>
+        </div>
+
+        <div class="cart-divider"></div>
+
+        <!-- Totaal -->
+        <div class="cart-total">
+          <span class="cart-total-label" id="cartTotalLabel">Totaal (incl. BTW)</span>
+          <span class="cart-total-price">€19,95</span>
+        </div>
+
+        <!-- Bestel knop -->
+        <button class="cart-order-btn" id="cartOrderBtn" onclick="submitCart()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-1"/><line x1="9" y1="21" x2="9" y2="17"/><line x1="13" y1="21" x2="13" y2="17"/></svg>
+          <span id="cartOrderBtnText">Bestelling plaatsen →</span>
+        </button>
+
+        <!-- Badges -->
+        <div class="cart-badges">
+          <span class="cart-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span id="cartBadge1">Veilige betaling</span>
+          </span>
+          <span class="cart-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span id="cartBadge2">Direct geleverd per e-mail</span>
+          </span>
+          <span class="cart-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span id="cartBadge3">72 uur geldig</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Succes state -->
+      <div class="cart-success" id="cartSuccess">
+        <div class="cart-success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 id="cartSuccessTitle">Bestelling ontvangen!</h3>
+        <p id="cartSuccessBody">Bedankt voor je bestelling. We sturen de speellink zo snel mogelijk naar je e-mailadres.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ── HERROEPINGSRECHT MODAL ── -->
+<div class="hr-modal-overlay" id="hrModal" onclick="closeHRModal(event)">
+  <div class="hr-modal">
+    <div class="hr-modal-header">
+      <h3 id="hrModalTitle">HERROEPINGSRECHT EN DIGITALE LEVERING</h3>
+      <button class="hr-modal-close" onclick="closeHRModalDirect()" aria-label="Sluiten">✕</button>
+    </div>
+    <!-- Mobile: open PDF in new tab -->
+    <div class="hr-mobile-content" id="hrMobileContent">
+      <div class="hr-mobile-icon">📄</div>
+      <p class="hr-mobile-hint" id="hrMobileHint">Open het document in een nieuw tabblad om het te lezen op jouw telefoon.</p>
+      <a href="Herroepingsrecht en digitale levering.pdf" target="_blank" class="hr-mobile-btn" id="hrMobileBtnNL">Herroepingsrecht en digitale levering (NL) →</a>
+      <a href="Right of Withdraw and Digital Delivery.pdf" target="_blank" class="hr-mobile-btn" id="hrMobileBtnEN" style="display:none;">Right of Withdrawal and Digital Delivery (EN) →</a>
+    </div>
+    <!-- Desktop: embedded PDF viewer -->
+    <iframe id="hrENFrame" src="Right of Withdraw and Digital Delivery.pdf" style="display:none;flex:1;border:none;width:100%;"></iframe>
+    <iframe id="hrPDFFrame" src="Herroepingsrecht en digitale levering.pdf" type="application/pdf"></iframe>
+  </div>
+</div>
 <!-- ── ALGEMENE VOORWAARDEN MODAL ── -->
 <div class="av-modal-overlay" id="avModal" onclick="closeAVModal(event)">
   <div class="av-modal">
@@ -2654,6 +3035,144 @@ function toggleFaq(btn) {
   </div>
 </div>
 <script>
+  /* ── WINKELWAGEN ── */
+  const cityNamesNL = { 'Delft': 'Delft', 'Rotterdam': 'Rotterdam', 'Amsterdam': 'Amsterdam' };
+  const cityNamesEN = { 'Delft': 'Delft', 'Rotterdam': 'Rotterdam', 'Amsterdam': 'Amsterdam' };
+
+  function openCart(city) {
+    const t = translations[currentLang];
+    const modal = document.getElementById('cartModal');
+    // Reset to form state
+    document.getElementById('cartFormWrap').style.display = 'block';
+    document.getElementById('cartSuccess').style.display  = 'none';
+    document.getElementById('cartEmail').value = '';
+    document.getElementById('cartEmail').classList.remove('error');
+    document.getElementById('cartConsentCheck').checked = false;
+    document.getElementById('cartConsent').classList.remove('error-consent');
+    document.getElementById('cartOrderBtn').disabled = false;
+    // Update texts
+    document.getElementById('cartTitle').textContent       = t['cart.title']        || 'Winkelwagen';
+    document.getElementById('cartProductName').textContent = t['cart.product.name'] || 'Bingo-Go Bingokaart';
+    document.getElementById('cartProductCity').textContent = city;
+    document.getElementById('cartEmailLabel').innerHTML    = (t['cart.email.label'] || 'E-mailadres') + ' <span style="color:var(--bingo-red)">*</span>';
+    document.getElementById('cartEmail').placeholder       = t['cart.email.placeholder'] || 'jouw@email.nl';
+    document.getElementById('cartConsentText').textContent = t['cart.consent'] || '';
+    document.getElementById('cartTotalLabel').textContent  = t['cart.total']        || 'Totaal (incl. BTW)';
+    document.getElementById('cartOrderBtnText').textContent = t['cart.order.btn']   || 'Bestelling plaatsen →';
+    document.getElementById('cartBadge1').textContent      = t['cart.badge1']       || '';
+    document.getElementById('cartBadge2').textContent      = t['cart.badge2']       || '';
+    document.getElementById('cartBadge3').textContent      = t['cart.badge3']       || '';
+    // Store city for submit
+    modal.dataset.city = city;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => { document.getElementById('cartEmail').focus(); }, 300);
+  }
+
+  function closeCart() {
+    document.getElementById('cartModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeCartOverlay(e) {
+    if (e.target === document.getElementById('cartModal')) closeCart();
+  }
+
+  function toggleConsent() {
+    const cb = document.getElementById('cartConsentCheck');
+    cb.checked = !cb.checked;
+    syncConsent();
+  }
+
+  function syncConsent() {
+    const cb  = document.getElementById('cartConsentCheck');
+    const box = document.getElementById('cartConsent');
+    if (cb.checked) box.classList.remove('error-consent');
+  }
+
+  function submitCart() {
+    const t     = translations[currentLang];
+    const email = document.getElementById('cartEmail').value.trim();
+    const agreed = document.getElementById('cartConsentCheck').checked;
+    const city  = document.getElementById('cartModal').dataset.city || '';
+    let valid = true;
+
+    // Validate e-mail
+    const emailInput = document.getElementById('cartEmail');
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRe.test(email)) {
+      emailInput.classList.add('error');
+      emailInput.focus();
+      alert(t['cart.validation.email'] || 'Vul een geldig e-mailadres in.');
+      valid = false;
+    } else {
+      emailInput.classList.remove('error');
+    }
+
+    // Validate consent
+    if (!agreed) {
+      document.getElementById('cartConsent').classList.add('error-consent');
+      if (valid) alert(t['cart.validation.consent'] || 'Je moet akkoord gaan met de digitale levering.');
+      valid = false;
+    } else {
+      document.getElementById('cartConsent').classList.remove('error-consent');
+    }
+
+    if (!valid) return;
+
+    // Disable button & show loading
+    const btn = document.getElementById('cartOrderBtn');
+    btn.disabled = true;
+    document.getElementById('cartOrderBtnText').textContent = t['cart.sending'] || 'Bestelling verwerken...';
+
+    // Send via EmailJS
+    emailjs.send('service_btnh3o8', 'template_ck7es5y', {
+      name:     'Webshop bestelling',
+      reply_to: email,
+      subject:  'Nieuwe bestelling – Bingo-Go ' + city,
+      message:  'Nieuwe bestelling ontvangen!\n\nStad: ' + city + '\nE-mail klant: ' + email + '\nPrijs: €19,95\nAkkoord digitale levering: Ja',
+    })
+    .then(function() {
+      document.getElementById('cartFormWrap').style.display = 'none';
+      const suc = document.getElementById('cartSuccess');
+      suc.style.display = 'block';
+      document.getElementById('cartSuccessTitle').textContent = t['cart.success.title'] || 'Bestelling ontvangen!';
+      document.getElementById('cartSuccessBody').textContent  = t['cart.success.body']  || '';
+    })
+    .catch(function() {
+      btn.disabled = false;
+      document.getElementById('cartOrderBtnText').textContent = t['cart.order.btn'] || 'Bestelling plaatsen →';
+      alert(currentLang === 'en'
+        ? 'Something went wrong. Please try again or email us at BingoGo015@gmail.com'
+        : 'Er is iets misgegaan. Probeer het opnieuw of mail ons op BingoGo015@gmail.com');
+    });
+  }
+
+  // Also update cart texts when language changes (if cart is open)
+  const _origSetLang = setLang;
+  // Wrap setLang to also refresh open cart
+  const _realSetLang = setLang;
+  window.setLang = function(lang) {
+    _realSetLang(lang);
+    const modal = document.getElementById('cartModal');
+    if (modal && modal.classList.contains('open')) {
+      openCart(modal.dataset.city || 'Delft');
+    }
+  };
+
+  function openHRModal() {
+    document.getElementById('hrModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeHRModal(e) {
+    if (e.target === document.getElementById('hrModal')) {
+      closeHRModalDirect();
+    }
+  }
+  function closeHRModalDirect() {
+    document.getElementById('hrModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
   function openAVModal() {
     document.getElementById('avModal').classList.add('open');
     document.body.style.overflow = 'hidden';
