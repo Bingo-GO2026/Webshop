@@ -3123,23 +3123,23 @@ function toggleFaq(btn) {
     // Disable button & show loading
     const btn = document.getElementById('cartOrderBtn');
     btn.disabled = true;
-    document.getElementById('cartOrderBtnText').textContent = t['cart.sending'] || 'Bestelling verwerken...';
+    document.getElementById('cartOrderBtnText').textContent = t['cart.sending'] || 'Betaling voorbereiden...';
 
-    // Send via EmailJS
-    emailjs.send('service_btnh3o8', 'template_ck7es5y', {
-      name:     'Webshop bestelling',
-      reply_to: email,
-      subject:  'Nieuwe bestelling – Bingo-Go ' + city,
-      message:  'Nieuwe bestelling ontvangen!\n\nStad: ' + city + '\nE-mail klant: ' + email + '\nPrijs: €19,95\nAkkoord digitale levering: Ja',
+    // Start Mollie payment via serverless API
+    fetch('/api/create-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, city, lang: currentLang }),
     })
-    .then(function() {
-      document.getElementById('cartFormWrap').style.display = 'none';
-      const suc = document.getElementById('cartSuccess');
-      suc.style.display = 'block';
-      document.getElementById('cartSuccessTitle').textContent = t['cart.success.title'] || 'Bestelling ontvangen!';
-      document.getElementById('cartSuccessBody').textContent  = t['cart.success.body']  || '';
+    .then(function(res) {
+      if (!res.ok) return res.json().then(function(d) { throw new Error(d.error || 'Server error'); });
+      return res.json();
     })
-    .catch(function() {
+    .then(function(data) {
+      // Redirect to Mollie checkout page
+      window.location.href = data.checkoutUrl;
+    })
+    .catch(function(err) {
       btn.disabled = false;
       document.getElementById('cartOrderBtnText').textContent = t['cart.order.btn'] || 'Bestelling plaatsen →';
       alert(currentLang === 'en'
