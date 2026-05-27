@@ -1,0 +1,10 @@
+{
+  "name": "bingo-go-webshop",
+  "version": "1.0.0",
+  "description": "Bingo-Go webshop met Mollie betaling",
+  "private": true,
+  "dependencies": {
+    "@mollie/api-client": "^3.7.0",
+    "@emailjs/nodejs": "^4.0.3"
+  }
+}
