@@ -3090,7 +3090,7 @@ function toggleFaq(btn) {
     if (cb.checked) box.classList.remove('error-consent');
   }
 
-  function submitCart() {
+  async function submitCart() {
     const t     = translations[currentLang];
     const email = document.getElementById('cartEmail').value.trim();
     const agreed = document.getElementById('cartConsentCheck').checked;
@@ -3125,27 +3125,26 @@ function toggleFaq(btn) {
     btn.disabled = true;
     document.getElementById('cartOrderBtnText').textContent = t['cart.sending'] || 'Bestelling verwerken...';
 
-    // Send via EmailJS
-    emailjs.send('service_btnh3o8', 'template_ck7es5y', {
-      name:     'Webshop bestelling',
-      reply_to: email,
-      subject:  'Nieuwe bestelling – Bingo-Go ' + city,
-      message:  'Nieuwe bestelling ontvangen!\n\nStad: ' + city + '\nE-mail klant: ' + email + '\nPrijs: €19,95\nAkkoord digitale levering: Ja',
-    })
-    .then(function() {
-      document.getElementById('cartFormWrap').style.display = 'none';
-      const suc = document.getElementById('cartSuccess');
-      suc.style.display = 'block';
-      document.getElementById('cartSuccessTitle').textContent = t['cart.success.title'] || 'Bestelling ontvangen!';
-      document.getElementById('cartSuccessBody').textContent  = t['cart.success.body']  || '';
-    })
-    .catch(function() {
+    // Redirect to Mollie checkout via server-side API
+    try {
+      const response = await fetch('/api/create-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, city, lang: currentLang })
+      });
+      const data = await response.json();
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error(data.error || 'Geen checkout URL ontvangen');
+      }
+    } catch (err) {
       btn.disabled = false;
       document.getElementById('cartOrderBtnText').textContent = t['cart.order.btn'] || 'Bestelling plaatsen →';
       alert(currentLang === 'en'
         ? 'Something went wrong. Please try again or email us at BingoGo015@gmail.com'
         : 'Er is iets misgegaan. Probeer het opnieuw of mail ons op BingoGo015@gmail.com');
-    });
+    }
   }
 
   // Also update cart texts when language changes (if cart is open)
