@@ -5,7 +5,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@mollie/api-client": "^3.7.0",
-    "@emailjs/nodejs": "^4.0.3"
+    "@mollie/api-client": "^3.7.0"
   }
 }
