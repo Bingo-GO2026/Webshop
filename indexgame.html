@@ -1960,9 +1960,20 @@
   //   • Vercel link met ?token=…     → productie mode, stad vergrendeld
   // ══════════════════════════════════════════════════════════════
   (function initTokenMode() {
-    const params = new URLSearchParams(window.location.search);
-    const token  = params.get('token');
-    if (!token) return; // geen token = dev mode, niets te doen
+    const params  = new URLSearchParams(window.location.search);
+    const token   = params.get('token');
+    const devCode = params.get('dev');
+
+    // Geheime dev-code in URL → dev mode (alleen jullie weten dit)
+    // Gebruik: indexgame.html?dev=JOUW_GEHEIME_WOORD
+    const DEV_CODE = 'BingoGO-dev-2026';
+    if (devCode === DEV_CODE) return;
+
+    // Geen token en geen geldige dev-code → doorsturen naar webshop
+    if (!token) {
+      window.location.replace('https://webshop-woad-rho.vercel.app');
+      return;
+    }
 
     // Verberg stad-kiezer meteen zodat er geen flits is
     const stadKiezer = document.getElementById('stad-kiezer');
