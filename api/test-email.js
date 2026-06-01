@@ -7,7 +7,11 @@ function generateToken(city, email) {
     .createHmac('sha256', process.env.TOKEN_SECRET)
     .update(payload)
     .digest('hex');
-  return Buffer.from(payload).toString('base64url') + '.' + sig;
+  return {
+    token:  Buffer.from(payload).toString('base64url') + '.' + sig,
+    expiry,
+    now:    Date.now(),
+  };
 }
 
 async function stuurEmail({ to_email, name, reply_to, subject, message }) {
@@ -36,7 +40,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const token   = generateToken(city.toLowerCase(), email);
+    const { token, expiry, now } = generateToken(city.toLowerCase(), email);
     const gameUrl = `https://play.bingo-go.com/index.html?token=${token}`;
 
     await stuurEmail({
@@ -47,7 +51,7 @@ export default async function handler(req, res) {
       message:  `Hoi!\n\nDit is een TEST e-mail.\n\nJouw unieke spellink (72 uur geldig):\n${gameUrl}\n\nVeel plezier!\n\nHet Bingo-Go team\nBingoGo015@gmail.com`,
     });
 
-    return res.status(200).json({ ok: true, gameUrl });
+    return res.status(200).json({ ok: true, gameUrl, debug_expiry: expiry, debug_now: now });
   } catch (err) {
     console.error('test-email error:', err);
     return res.status(500).json({ error: err.message });
