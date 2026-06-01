@@ -1,5 +1,17 @@
 import crypto from 'crypto';
 
+// Leid een vaste 4-letter game code af uit de HMAC-handtekening
+// Zelfde alfabet als de client-side genereerCode functie
+function sigNaarGameCode(sigHex) {
+  const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // 23 letters, geen I/O
+  let code = '';
+  for (let i = 0; i < 4; i++) {
+    const byte = parseInt(sigHex.substring(i * 2, i * 2 + 2), 16);
+    code += letters[byte % letters.length];
+  }
+  return code;
+}
+
 export default function handler(req, res) {
   // CORS — sta requests toe vanuit play.bingo-go.com
   res.setHeader('Access-Control-Allow-Origin', 'https://play.bingo-go.com');
@@ -58,7 +70,10 @@ export default function handler(req, res) {
       return res.status(401).json({ valid: false, expired: true, error: 'Link is verlopen (72 uur overschreden)' });
     }
 
-    return res.status(200).json({ valid: true, city, email });
+    // Leid een unieke, stabiele game code af uit de handtekening
+    const gameCode = sigNaarGameCode(expectedSig);
+
+    return res.status(200).json({ valid: true, city, email, gameCode });
 
   } catch (err) {
     console.error('verify-token error:', err);
