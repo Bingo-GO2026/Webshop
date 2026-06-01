@@ -2,14 +2,10 @@ import crypto from 'crypto';
 
 // Leid een vaste 4-letter game code af uit de HMAC-handtekening
 // Zelfde alfabet als de client-side genereerCode functie
+// Gebruik eerste 16 hex-chars van de HMAC als Firebase game key
+// Deterministisch: zelfde token = altijd zelfde key
 function sigNaarGameCode(sigHex) {
-  const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // 23 letters, geen I/O
-  let code = '';
-  for (let i = 0; i < 4; i++) {
-    const byte = parseInt(sigHex.substring(i * 2, i * 2 + 2), 16);
-    code += letters[byte % letters.length];
-  }
-  return code;
+  return sigHex.substring(0, 16);
 }
 
 export default function handler(req, res) {
